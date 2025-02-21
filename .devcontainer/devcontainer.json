@@ -1,0 +1,44 @@
+{
+    "name": "${localWorkspaceFolderBasename}",
+    "dockerComposeFile": "docker-compose.yml",
+    "forwardPorts": [3000, 5010, 3306],
+    "service": "main",
+    "workspaceFolder": "/workspace",
+    "mounts": [
+        // SSH config
+        {
+            "source": "${env:HOME}/.ssh",
+            "target": "/home/vscode/.ssh",
+            "type": "bind"
+        },
+        {
+            "source": "../backend",
+            "target": "/workspace/backend",
+            "type": "bind"
+        }
+    ],
+    "customizations": {
+        "vscode": {
+            "extensions": ["esbenp.prettier-vscode", "GitHub.copilot", "GitHub.copilot-chat", "GitHub.vscode-pull-request-github"],
+            "settings": {
+                "editor.formatOnPaste": true,
+                "editor.formatOnSave": true,
+                "terminal.integrated.scrollback": 10000,
+                "files.associations": {
+                    "*.hcl": "terraform"
+                }
+            }
+        }
+    },
+    // Sync the local user's UID/GID with the container's user UID/GID.
+    "remoteUser": "vscode",
+    "containerEnv": {
+        "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
+        "ghcr.io/devcontainers/features/node:1": { "version": "22.11.0" },
+        "ghcr.io/devcontainers/features/python:1": { "version": "3.11" }
+    },
+    "postCreateCommand": "bash .devcontainer/scripts/install-dependencies.sh"
+}

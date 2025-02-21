@@ -1,0 +1,52 @@
+services:
+    main:
+        image: mcr.microsoft.com/vscode/devcontainers/base:bullseye
+        init: true
+        tty: true
+        cap_add:
+            - IPC_LOCK
+        volumes:
+            - ..:/workspace:cached
+        networks:
+            - main
+
+    rdb:
+        image: mysql:8.2.0
+        environment:
+            TZ: "+00:00"
+            MYSQL_USER: "remote_user"
+            MYSQL_PASSWORD: "remote_password"
+            MYSQL_ROOT_PASSWORD: "root_password"
+        command: "mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_0900_bin"
+        healthcheck:
+            test: ["CMD", "mysql", "-u", "remote_user", "-p", "remote_password"]
+            interval: 7s
+            timeout: 3s
+            retries: 13
+        ports:
+            - 3306:3306
+        expose:
+            - 3306
+        cap_add:
+            - SYS_NICE
+        volumes:
+            - ./rdb:/docker-entrypoint-initdb.d
+            - ./rdb/mysql/conf.d:/etc/mysql/conf.d
+        networks:
+            - main
+
+    backend:
+        container_name: backend
+        build:
+            context: ../backend # Dockerfile があるディレクトリを指定
+        ports:
+            - "5010:5010"
+        volumes:
+            - ../backend:/app
+        networks:
+            - main
+
+networks:
+    main:
+        driver: bridge
+        enable_ipv6: false
