@@ -19,7 +19,14 @@
     ],
     "customizations": {
         "vscode": {
-            "extensions": ["esbenp.prettier-vscode", "GitHub.copilot", "GitHub.copilot-chat", "GitHub.vscode-pull-request-github"],
+            "extensions": [
+                "esbenp.prettier-vscode",
+                "GitHub.copilot",
+                "GitHub.copilot-chat",
+                "GitHub.vscode-pull-request-github",
+                "rssowl.copy-relative-path-posix",
+                "bradlc.vscode-tailwindcss"
+            ],
             "settings": {
                 "editor.formatOnPaste": true,
                 "editor.formatOnSave": true,
