@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import Header from "./Header";
 import Controller from "./Controller";
 import Chart from "./Chart";
