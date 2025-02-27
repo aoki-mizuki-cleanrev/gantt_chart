@@ -1,0 +1,4 @@
+/* styles/custom-gantt.css */
+.ganttTable_Header .calendarDay {
+    display: none; /* 曜日部分を非表示にする */
+}

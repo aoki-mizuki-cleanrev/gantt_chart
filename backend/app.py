@@ -25,65 +25,65 @@ def format_task(task):
 def index():
     tasks = [
         {
-            "start": datetime(2020, 1, 1),
-            "end": datetime(2020, 1, 31),
+            "start": datetime(2025, 2, 1),
+            "end": datetime(2025, 2, 28),
             "name": "Project1",
             "id": "p_1",
             "type": "project",
             "progress": 10,
-            "isDisabled": True,
+            "isDisabled": False,
             "styles": {
                 "progressColor": "#ffbb54",
                 "progressSelectedColor": "#ff9e0d"
             },
         },
         {
-            "start": datetime(2020, 1, 1),
-            "end": datetime(2020, 1, 1),
+            "start": datetime(2025, 2, 1),
+            "end": datetime(2025, 2, 1),
             "name": "start",
             "id": "m_1",
             "type": "milestone",
             "progress": 10,
-            "isDisabled": True,
+            "isDisabled": False,
             "styles": {
                 "progressColor": "#ffbb54",
                 "backgroundColor": "#07dbee"
             },
         },
         {
-            "start": datetime(2020, 1, 20),
-            "end": datetime(2020, 1, 20),
+            "start": datetime(2025, 2, 20),
+            "end": datetime(2025, 2, 20),
             "name": "E2E test",
             "id": "m_2",
             "type": "milestone",
             "progress": 10,
-            "isDisabled": True,
+            "isDisabled": False,
             "styles": {
                 "progressColor": "#ffbb54",
                 "backgroundColor": "#07dbee"
             },
         },
         {
-            "start": datetime(2020, 1, 2),
-            "end": datetime(2020, 1, 5),
+            "start": datetime(2025, 2, 2),
+            "end": datetime(2025, 2, 5),
             "name": "Task 1",
             "id": "t_1",
             "type": "task",
             "progress": 45,
-            "isDisabled": True,
+            "isDisabled": False,
             "styles": {
                 "progressColor": "#ffbb54",
                 "progressSelectedColor": "#ff9e0d"
             },
         },
         {
-            "start": datetime(2020, 1, 6),
-            "end": datetime(2020, 1, 10),
+            "start": datetime(2025, 2, 6),
+            "end": datetime(2025, 2, 10),
             "name": "Task 2",
             "id": "t_2",
             "type": "task",
             "progress": 25,
-            "isDisabled": True,
+            "isDisabled": False,
             "dependencies": ["t_1"],
             "styles": {
                 "progressColor": "#ffbb54",
@@ -91,13 +91,13 @@ def index():
             },
         },
         {
-            "start": datetime(2020, 1, 11),
-            "end": datetime(2020, 1, 15),
+            "start": datetime(2025, 2, 11),
+            "end": datetime(2025, 2, 15),
             "name": "Task 3",
             "id": "t_3",
             "type": "task",
             "progress": 0,
-            "isDisabled": True,
+            "isDisabled": False,
             "dependencies": ["t_2"],
             "styles": {
                 "progressColor": "#ffbb54",
