@@ -25,3 +25,4 @@ dist-ssr
 
 report.txt
 
+./backend/__pycache__
