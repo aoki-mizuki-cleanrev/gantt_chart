@@ -3,7 +3,7 @@ import { Gantt, Task, ViewMode } from "@rsagiev/gantt-task-react-19";
 import dayjs from "dayjs";
 import "@rsagiev/gantt-task-react-19/dist/index.css";
 import { getStartEndDateForProject } from "./helpers";
-import "./custom-gantt.css";
+import "../assets/custom-gantt.css";
 
 // const tasks: Task[] = [
 //     {
@@ -15,60 +15,8 @@ import "./custom-gantt.css";
 //         progress: 10,
 //         isDisabled: true,
 //         styles: { progressColor: "#ffbb54", progressSelectedColor: "#ff9e0d" },
-//     },
-//     {
-//         start: new Date(2020, 1, 2),
-//         end: new Date(2020, 1, 2),
-//         name: "CV",
-//         id: "m_1",
-//         type: "milestone",
-//         progress: 45,
-//         isDisabled: true,
-//         styles: { progressColor: "#ffbb54", backgroundColor: "#07dbee" },
-//     },
-//     {
-//         start: new Date(2020, 1, 2),
-//         end: new Date(2020, 1, 5),
-//         name: "Idea",
-//         id: "m_2",
-//         type: "milestone",
-//         progress: 45,
-//         isDisabled: true,
-//         styles: { progressColor: "#ffbb54", progressSelectedColor: "#ff9e0d" },
-//     },
-//     {
-//         start: new Date(2020, 1, 2),
-//         end: new Date(2020, 1, 5),
-//         name: "Task 1",
-//         id: "t_1",
-//         type: "task",
-//         progress: 45,
-//         isDisabled: true,
-//         styles: { progressColor: "#ffbb54", progressSelectedColor: "#ff9e0d" },
-//     },
-//     {
-//         start: new Date(2020, 1, 6),
-//         end: new Date(2020, 1, 10),
-//         name: "Task 2",
-//         id: "t_2",
-//         type: "task",
-//         progress: 45,
-//         isDisabled: true,
-//         dependencies: ["t_1"],
-//         styles: { progressColor: "#ffbb54", progressSelectedColor: "#ff9e0d" },
-//     },
-//     {
-//         start: new Date(2020, 1, 11),
-//         end: new Date(2020, 1, 15),
-//         name: "Task 3",
-//         id: "t_3",
-//         type: "task",
-//         progress: 0,
-//         isDisabled: true,
-//         dependencies: ["t_2"],
-//         styles: { progressColor: "#ffbb54", progressSelectedColor: "#ff9e0d" },
-//     },
-// ];
+//     },]
+
 function Chart() {
     const [taskData, setTaskData] = useState<Task[] | null>(null);
     const [loading, setLoading] = useState(true);

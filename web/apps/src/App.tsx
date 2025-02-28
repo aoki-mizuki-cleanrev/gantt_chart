@@ -1,6 +1,6 @@
-import Header from "./Header";
-import Controller from "./Controller";
-import Chart from "./Chart";
+import Header from "./components/Header";
+import Controller from "./components/Controller";
+import Chart from "./components/Chart";
 
 function App() {
     // const [count, setCount] = useState(0);
