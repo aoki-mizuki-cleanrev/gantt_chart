@@ -10,8 +10,14 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.0",
+        "@mui/icons-material": "^6.4.6",
+        "@mui/material": "^6.4.6",
         "@rsagiev/gantt-task-react-19": "^0.3.9",
         "@tailwindcss/vite": "^4.0.7",
+        "@wamra/gantt-task-react": "^0.6.17",
+        "class-variance-authority": "^0.7.1",
         "dayjs": "^1.11.13",
         "react": "^19.0.0",
         "react-dnd": "^16.0.1",

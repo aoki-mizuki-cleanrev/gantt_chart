@@ -38,6 +38,19 @@ def index():
             },
         },
         {
+            "start": datetime(2025, 3, 1),
+            "end": datetime(2025, 3, 31),
+            "name": "Project2",
+            "id": "p_2",
+            "type": "project",
+            "progress": 0,
+            "isDisabled": False,
+            "styles": {
+                "progressColor": "#ffbb54",
+                "progressSelectedColor": "#ff9e0d"
+            },
+        },
+        {
             "start": datetime(2025, 2, 1),
             "end": datetime(2025, 2, 1),
             "name": "start",
@@ -75,6 +88,8 @@ def index():
                 "progressColor": "#ffbb54",
                 "progressSelectedColor": "#ff9e0d"
             },
+            "project": "Project1"
+
         },
         {
             "start": datetime(2025, 2, 6),
