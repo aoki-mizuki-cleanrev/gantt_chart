@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Gantt, Task, ViewMode } from "@rsagiev/gantt-task-react-19";
 import "@rsagiev/gantt-task-react-19/dist/index.css";
 // import { Gantt, Task, EventOption, StylingOption, ViewMode, DisplayOption } from "@wamra/gantt-task-react";
@@ -30,9 +30,9 @@ function Chart({ displayMode }: ChartProps) {
     const [error, setError] = useState<string | null>(null);
     // const [tasks, setTasks] = useState<Task[] | null>(taskData);
 
-    const handlerClick = () => {
-        return alert("clicked!");
-    };
+    // const handlerClick = () => {
+    //     return alert("clicked!");
+    // };
     const handleProgressClickChange = (event: React.ChangeEvent<HTMLInputElement>, taskId: string) => {
         const newProgress = Number(event.target.value);
 
@@ -82,13 +82,15 @@ function Chart({ displayMode }: ChartProps) {
                             {[
                                 task.name,
                                 <Input
+                                    key={`${task.id}-start`}
                                     type="date"
                                     value={dayjs(task.start).format("YYYY-MM-DD")}
                                     onChange={(e) => handleStartDateClickChange(e, task.id)}
                                 />,
-                                <div>
+                                <div key={`${task.id}-end`}>
                                     {task.type !== "milestone" ? (
                                         <Input
+                                            key={`${task.id}-end-input`}
                                             type="date"
                                             value={dayjs(task.end).format("YYYY-MM-DD")}
                                             onChange={(e) => handleEndDateClickChange(e, task.id)}
@@ -97,9 +99,10 @@ function Chart({ displayMode }: ChartProps) {
                                         []
                                     )}
                                 </div>,
-                                <div>
+                                <div key={`${task.id}-progress`}>
                                     {task.type !== "milestone" ? (
                                         <Input
+                                            key={`${task.id}-progress-input`}
                                             type="number"
                                             max="100"
                                             name=""
@@ -113,9 +116,9 @@ function Chart({ displayMode }: ChartProps) {
                                         []
                                     )}
                                 </div>,
-                            ].map((item, i) => (
+                            ].map((item, index) => (
                                 <div
-                                    key={i}
+                                    key={index}
                                     style={{ display: "table-cell" }}
                                     className="text-center h-[50px] p-2 content-center border-b-[1px] border-[#f5f5f5] truncate whitespace-nowra"
                                 >
@@ -139,7 +142,7 @@ function Chart({ displayMode }: ChartProps) {
                 }
             })
             .then((data) => {
-                const transformData: Task[] = data.map((task: any) => ({
+                const transformData: Task[] = data.map((task: Task) => ({
                     ...task,
                     start: new Date(task.start),
                     end: new Date(task.end),
