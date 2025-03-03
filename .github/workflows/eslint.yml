@@ -13,7 +13,7 @@ jobs:
               with:
                   node-version: 18 # 必要なら Node.js バージョンを指定
             - name: Install dependencies
-              run: npm install --prefix web/app
+              run: npm install --prefix web/apps
             - name: Run ESLint with Reviewdog
               uses: reviewdog/action-eslint@v1
               with:
@@ -23,4 +23,4 @@ jobs:
                   fail_level: error
             - name: Run ESLint manually
               run: npm run lint
-              working-directory: web/app
+              working-directory: web/apps
