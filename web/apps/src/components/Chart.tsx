@@ -20,8 +20,11 @@ import { Input } from "./common/Input";
 //         isDisabled: true,
 //         styles: { progressColor: "#ffbb54", progressSelectedColor: "#ff9e0d" },
 //     },]
+interface ChartProps {
+    displayMode: ViewMode;
+}
 
-function Chart() {
+function Chart({ displayMode }: ChartProps) {
     const [taskData, setTaskData] = useState<Task[] | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -30,21 +33,21 @@ function Chart() {
     const handlerClick = () => {
         return alert("clicked!");
     };
-    const handleProgressClickChange = (event: React.ChangeEvent<HTMLButtonElement>, taskId: string) => {
+    const handleProgressClickChange = (event: React.ChangeEvent<HTMLInputElement>, taskId: string) => {
         const newProgress = Number(event.target.value);
 
         const newTasks = taskData ? taskData?.map((t) => (t.id === taskId ? { ...t, progress: newProgress } : t)) : [];
 
         setTaskData(newTasks);
     };
-    const handleStartDateClickChange = (event: React.ChangeEvent<HTMLButtonElement>, taskId: string) => {
+    const handleStartDateClickChange = (event: React.ChangeEvent<HTMLInputElement>, taskId: string) => {
         const newStart = new Date(event.target.value);
 
         const newTasks = taskData ? taskData?.map((t) => (t.id === taskId ? { ...t, start: newStart } : t)) : [];
 
         setTaskData(newTasks);
     };
-    const handleEndDateClickChange = (event: React.ChangeEvent<HTMLButtonElement>, taskId: string) => {
+    const handleEndDateClickChange = (event: React.ChangeEvent<HTMLInputElement>, taskId: string) => {
         const newEnd = new Date(event.target.value);
 
         const newTasks = taskData ? taskData?.map((t) => (t.id === taskId ? { ...t, end: newEnd } : t)) : [];
@@ -184,7 +187,7 @@ function Chart() {
                 handleWidth={1}
                 // listCellWidth={""}
                 columnWidth={50}
-                viewMode={ViewMode.Day}
+                viewMode={displayMode}
                 preStepsCount={1}
                 locale={"ja-JS"}
                 timeStep={86400000}

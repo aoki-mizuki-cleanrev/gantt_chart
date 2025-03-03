@@ -1,7 +1,11 @@
 import React from "react";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 
-function Controller() {
+interface ControllerProps {
+    handleDisplayModeChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+}
+
+function Controller({ handleDisplayModeChange }: ControllerProps) {
     return (
         <div className="h-[80px] flex">
             <div className="wrapper ml-auto p-2 font flex items-center">
@@ -14,6 +18,9 @@ function Controller() {
                         name=""
                         id="displayModeSelect"
                         className="w-[80px] text-center text-[16px] outline-none cursor-pointer"
+                        onChange={(event) => {
+                            handleDisplayModeChange(event);
+                        }}
                     >
                         <option value="Day" selected>
                             日
