@@ -27,7 +27,7 @@ def index():
         {
             "start": datetime(2025, 2, 1),
             "end": datetime(2025, 2, 28),
-            "name": "Project1",
+            "name": "Project1 aaa",
             "id": "p_1",
             "type": "project",
             "progress": 10,
@@ -36,6 +36,7 @@ def index():
                 "progressColor": "#ffbb54",
                 "progressSelectedColor": "#ff9e0d"
             },
+            "hideChildren": False
         },
         {
             "start": datetime(2025, 3, 1),
@@ -88,7 +89,7 @@ def index():
                 "progressColor": "#ffbb54",
                 "progressSelectedColor": "#ff9e0d"
             },
-            "project": "Project1"
+            "project": "p_1"
 
         },
         {
@@ -104,6 +105,8 @@ def index():
                 "progressColor": "#ffbb54",
                 "progressSelectedColor": "#ff9e0d"
             },
+            "project": "p_1"
+
         },
         {
             "start": datetime(2025, 2, 11),
@@ -118,6 +121,8 @@ def index():
                 "progressColor": "#ffbb54",
                 "progressSelectedColor": "#ff9e0d"
             },
+            "project": "p_1"
+
         },
     ]
 

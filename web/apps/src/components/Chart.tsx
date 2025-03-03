@@ -54,6 +54,10 @@ function Chart({ displayMode }: ChartProps) {
 
         setTaskData(newTasks);
     };
+    const handleExpanderClick = (task: Task) => {
+        setTaskData(taskData ? taskData.map((t) => (t.id === task.id ? task : t)) : []);
+        console.log("On expander click Id:" + task.id);
+    };
 
     const tableHeaders = ["タスク名", "開始日", "終了日", "進捗率(%)"];
     const CustomTable = ({ tasks }: { tasks: Task[] }) => {
@@ -201,6 +205,7 @@ function Chart({ displayMode }: ChartProps) {
                 // onClick={handlerClick}
                 onDateChange={handleTaskChange}
                 onProgressChange={handleProgressChange}
+                onExpanderClick={handleExpanderClick}
                 TaskListHeader={() => (
                     <div className="h-[20px] flex items-center">
                         <h2 className="text-center p-2 w-full font-bold">Title</h2>

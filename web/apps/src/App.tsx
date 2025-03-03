@@ -18,6 +18,14 @@ function App() {
                     return ViewMode.Week;
                 case "Month":
                     return ViewMode.Month;
+                case "Quarter Day":
+                    return ViewMode.QuarterDay;
+                case "Half Day":
+                    return ViewMode.HalfDay;
+                case "QuarterYear":
+                    return ViewMode.QuarterYear;
+                case "Year":
+                    return ViewMode.Year;
                 default:
                     return ViewMode.Day;
             }

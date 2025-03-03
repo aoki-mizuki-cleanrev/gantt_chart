@@ -11,7 +11,7 @@ function Controller({ handleDisplayModeChange }: ControllerProps) {
             <div className="wrapper ml-auto p-2 font flex items-center">
                 <label
                     htmlFor="displayModeSelect"
-                    className="border rounded-[5px] border-transparent flex items-center px-4 py-2 focus:border-[#ccc] cursor-pointer"
+                    className="border rounded-[5px] border-transparent flex items-center px-4 py-2 focus:border-[#ccc]"
                 >
                     <DateRangeIcon fontSize="large" />
                     <select
@@ -21,12 +21,12 @@ function Controller({ handleDisplayModeChange }: ControllerProps) {
                         onChange={(event) => {
                             handleDisplayModeChange(event);
                         }}
+                        defaultValue={"Day"}
                     >
-                        <option value="Day" selected>
-                            日
-                        </option>
+                        <option value="Day">日</option>
                         <option value="Week">週</option>
                         <option value="Month">月</option>
+                        <option value="Hour">時間</option>
                     </select>
                 </label>
             </div>
