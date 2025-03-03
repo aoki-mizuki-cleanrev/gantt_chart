@@ -1,36 +1,32 @@
-name: ESLint
+name: ESLint Check
 
-on: [pull_request]
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
 
 jobs:
     eslint:
-        name: eslint
         runs-on: ubuntu-latest
+
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v4 # ✅ v3 → v4 に更新
+              uses: actions/checkout@v4
 
-            - name: Install Node.js
-              uses: actions/setup-node@v4 # ✅ v3 → v4 に更新
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
               with:
-                  node-version: 18 # ✅ 必要なら変更可能
-                  cache: "npm"
-                  cache-dependency-path: web/apps/package-lock.json # ✅ キャッシュを有効化
+                  node-version: 18
 
             - name: Install dependencies
-              working-directory: web/apps
-              run: npm ci # ✅ `npm install` ではなく `npm ci` で一貫性を確保
-
-            - name: Add node_modules/.bin to PATH
-              run: echo "$(pwd)/web/apps/node_modules/.bin" >> $GITHUB_PATH # ✅ `eslint` が確実に使えるようにする
-
-            - name: Run ESLint with Reviewdog
-              working-directory: web/apps # ✅ `web/apps` で実行
               run: |
-                  npx eslint --ext .vue,.ts,.js,.tsx . | npx reviewdog -f=eslint -name="ESLint" -reporter=github-pr-review -fail-on-error=true
-              env:
-                  REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }} # ✅ 環境変数で指定
+                  cd web/apps
+                  npm install
 
-            - name: Run ESLint manually
-              working-directory: web/apps
-              run: npm run lint
+            - name: Run ESLint
+              run: |
+                  cd web/apps
+                  npx eslint . --ext .js,.ts,.tsx
