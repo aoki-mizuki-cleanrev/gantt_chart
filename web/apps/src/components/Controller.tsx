@@ -28,6 +28,7 @@ function Controller({ handleDisplayModeChange }: ControllerProps) {
                         <option value="Month">月</option>
                         <option value="Hour">時間</option>
                     </select>
+                    test!!
                 </label>
             </div>
         </div>
