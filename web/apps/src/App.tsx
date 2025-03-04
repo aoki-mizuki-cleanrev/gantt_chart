@@ -36,6 +36,7 @@ function App() {
             <Header />
             <Controller handleDisplayModeChange={handleDisplayModeChange} />
             <Chart displayMode={displayMode} />
+            aaa
         </div>
     );
 }
