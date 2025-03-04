@@ -1,2 +1,3 @@
-backend/__pycache__/app.cpython-311.pyc
+backend/python_service/app/__pycache__/app.cpython-311.pyc
 .DS_Store
+backend/node_service/node_modules

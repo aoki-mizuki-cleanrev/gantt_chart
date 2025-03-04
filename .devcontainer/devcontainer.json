@@ -1,7 +1,7 @@
 {
     "name": "${localWorkspaceFolderBasename}",
     "dockerComposeFile": "docker-compose.yml",
-    "forwardPorts": [3000, 5010, 3306],
+    "forwardPorts": [3000, 5010, 3306, 6010],
     "service": "main",
     "workspaceFolder": "/workspace",
     "mounts": [

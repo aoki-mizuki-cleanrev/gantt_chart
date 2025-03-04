@@ -35,14 +35,26 @@ services:
         networks:
             - main
 
-    backend:
-        container_name: backend
+    backend_python:
+        container_name: python_service
         build:
-            context: ../backend # Dockerfile があるディレクトリを指定
+            context: ../backend/python_service # Dockerfile があるディレクトリを指定
+        tty: true
         ports:
             - "5010:5010"
         volumes:
-            - ../backend:/app
+            - ../backend/python_service:/apps
+        networks:
+            - main
+    backend_nodejs:
+        container_name: node_service
+        build:
+            context: ../backend/node_service # Dockerfile があるディレクトリを指定
+        tty: true
+        ports:
+            - "6010:6010"
+        volumes:
+            - ../backend/node_service:/usr/src/app
         networks:
             - main
 

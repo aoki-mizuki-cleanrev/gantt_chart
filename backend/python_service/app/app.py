@@ -124,6 +124,22 @@ def index():
             "project": "p_1"
 
         },
+        {
+            "start": datetime(2025, 2, 16),
+            "end": datetime(2025, 3, 1),
+            "name": "Task 4",
+            "id": "t_4",
+            "type": "task",
+            "progress": 0,
+            "isDisabled": False,
+            "dependencies": ["t_3"],
+            "styles": {
+                "progressColor": "#ffbb54",
+                "progressSelectedColor": "#ff9e0d"
+            },
+            "project": "p_1"
+
+        },
     ]
 
     return jsonify([format_task(task) for task in tasks])

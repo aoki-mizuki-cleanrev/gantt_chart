@@ -4,12 +4,36 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Run All Apps",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}/backend/app"
+            },
+            "command": "echo running...",
+            "dependsOn": ["[BACKEND] Run API - Python", "[BACKEND] Run API - Nodejs", "[WEB] Run App"],
+            "problemMatcher": []
+        },
+        {
             "label": "[WEB] Run App",
             "type": "shell",
             "command": "npm run dev",
             "options": {
                 "cwd": "${workspaceFolder}/web/apps"
             },
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
+            "label": "[BACKEND] Run API - Nodejs",
+            "type": "shell",
+            "command": "docker exec -it node_service npm start",
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
+            "label": "[BACKEND] Run API - Python",
+            "type": "shell",
+            "command": "docker exec -it python_service gunicorn -w 4 app:app --bind 0.0.0.0:5010 --reload",
             "problemMatcher": [],
             "group": "build"
         }
