@@ -20,22 +20,33 @@
             "options": {
                 "cwd": "${workspaceFolder}/web/apps"
             },
-            "problemMatcher": [],
-            "group": "build"
+            "problemMatcher": []
         },
         {
             "label": "[BACKEND] Run API - Nodejs",
             "type": "shell",
             "command": "docker exec -it node_service npm start",
-            "problemMatcher": [],
-            "group": "build"
+            "problemMatcher": []
         },
         {
             "label": "[BACKEND] Run API - Python",
             "type": "shell",
-            "command": "docker exec -it python_service gunicorn -w 4 app:app --bind 0.0.0.0:5010 --reload",
+            "command": "docker exec -it python_service gunicorn -w 4 app:app --bind 0.0.0.0:5010 --reload --pid gunicorn.pid",
             "problemMatcher": [],
-            "group": "build"
+            "dependsOn": ["Stop gunicorn"],
+            "isBackground": false
+        },
+        {
+            "label": "[BACKEND] CLEAN RDB",
+            "type": "shell",
+            "command": "docker exec -it python_service python excute_sql.py ",
+            "problemMatcher": []
+        },
+        {
+            "label": "Stop gunicorn",
+            "type": "shell",
+            "command": "docker exec -it python_service sh -c '[ -f gunicorn.pid ] && kill $(cat gunicorn.pid) && rm -f gunicorn.pid || true'",
+            "problemMatcher": []
         }
     ]
 }

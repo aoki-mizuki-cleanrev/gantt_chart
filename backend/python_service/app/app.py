@@ -1,9 +1,49 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 from datetime import datetime
+import pytz
+import logging
+# DB ----------------------
+# import mysql.connector
+# from mysql.connector import Error
+# import os
+from dotenv import load_dotenv
+# ------
+from routers.task_api import api
+
 
 app = Flask(__name__)
 CORS(app)  # 全てのドメインからのアクセスを許可
+
+# Rooting
+app.register_blueprint(api, url_prefix="/task_api")
+
+# 環境変数
+load_dotenv(dotenv_path="./config.env", override=True)
+
+
+class JSTFormatter(logging.Formatter):
+    """日本時間のフォーマッター"""
+
+    def formatTime(self, record, datefmt=None):
+        jst = pytz.timezone("Asia/Tokyo")
+        dt = datetime.fromtimestamp(record.created, tz=jst)
+        if datefmt:
+            return dt.strftime(datefmt)
+        return dt.isoformat()
+
+
+# ログの設定
+fmt = "[%(asctime)s] [line_%(lineno)d] [%(levelname)s] %(name)s :%(message)s"
+datefmt = "%Y-%m-%d %H:%M:%S"  # 日本時間のフォーマット
+formatter = JSTFormatter(fmt, datefmt)
+
+handler = logging.StreamHandler()
+handler.setFormatter(formatter)
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+logger.addHandler(handler)
 
 
 def format_task(task):

@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run All Apps",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/backend/app",
+            "preLaunchTask": "Run All Apps",
+            "postDebugTask": "Stop All Apps"
+        }
+    ]
+}

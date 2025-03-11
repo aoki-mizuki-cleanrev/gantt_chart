@@ -11,9 +11,9 @@ app.use("/api", api);
 
 // -------------------
 app.get("/", (req, res) => {
-    res.send("Hello, Nodejs!");
+    res.send("Hello, Nodejs");
 });
 
 app.listen(PORT, () => {
-    console.log(`~~~~~ Listening to on PORT: ${PORT} ~~~~~`);
+    console.log(`🚀 Server running on http:0.0.0.0: ${PORT} ~~~~~`);
 });

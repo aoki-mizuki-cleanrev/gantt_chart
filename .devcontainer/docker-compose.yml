@@ -12,6 +12,7 @@ services:
 
     rdb:
         image: mysql:8.2.0
+        container_name: rdb
         environment:
             TZ: "+00:00"
             MYSQL_USER: "remote_user"
@@ -19,10 +20,11 @@ services:
             MYSQL_ROOT_PASSWORD: "root_password"
         command: "mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_0900_bin"
         healthcheck:
-            test: ["CMD", "mysql", "-u", "remote_user", "-p", "remote_password"]
-            interval: 7s
-            timeout: 3s
-            retries: 13
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "remote_user", "-premote_password"]
+            interval: 10s
+            timeout: 5s
+            retries: 15
+
         ports:
             - 3306:3306
         expose:
