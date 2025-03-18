@@ -1,5 +1,6 @@
 import React from "react";
 import DateRangeIcon from "@mui/icons-material/DateRange";
+import Button from "./common/Button";
 
 interface ControllerProps {
     handleDisplayModeChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -7,8 +8,9 @@ interface ControllerProps {
 
 function Controller({ handleDisplayModeChange }: ControllerProps) {
     return (
-        <div className="h-[80px] flex">
-            <div className="wrapper ml-auto p-2 font flex items-center">
+        <div className="h-[80px] w-full flex">
+            <div className="wrapper ml-auto p-2 font flex items-center gap-[20px]">
+                <Button variant="secondary">sss</Button>
                 <label
                     htmlFor="displayModeSelect"
                     className="border rounded-[5px] border-transparent flex items-center px-4 py-2 focus:border-[#ccc]"

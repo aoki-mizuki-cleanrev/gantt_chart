@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
+// import useSWR from "swr";
 import { Gantt, Task, ViewMode } from "@rsagiev/gantt-task-react-19";
 import "@rsagiev/gantt-task-react-19/dist/index.css";
 // import { Gantt, Task, EventOption, StylingOption, ViewMode, DisplayOption } from "@wamra/gantt-task-react";
 // import "@wamra/gantt-task-react/dist/style.css";
 
-import dayjs from "dayjs";
 import { getStartEndDateForProject } from "./helpers";
 import "../assets/custom-gantt.css";
-import { Input } from "./common/Input";
+import CustomTable from "./TableContents/CustomTable";
 
 // const tasks: Task[] = [
 //     {
@@ -24,15 +24,37 @@ interface ChartProps {
     displayMode: ViewMode;
 }
 
+// Task並べ替え
+const sortTask = (data: Task[]) => {
+    // まず、typeが'project'のアイテムを優先して並べる
+    const projects = data.filter((item) => item.type === "project");
+    const others = data.filter((item) => item.type !== "project");
+    const sortedArray = [];
+    let pivot: Task | null = null;
+
+    for (let j = 0; j < projects.length; j++) {
+        pivot = projects[j];
+
+        const relatedTasks = others.filter((other: Task) => other.project === pivot?.id);
+
+        sortedArray.push(pivot);
+        sortedArray.push(...relatedTasks);
+
+        // 関連タスクをothersから削除
+        others.forEach((task, index) => {
+            if (task.project === pivot?.id) {
+                others.splice(index, 1);
+            }
+        });
+    }
+    return sortedArray;
+};
+
 function Chart({ displayMode }: ChartProps) {
     const [taskData, setTaskData] = useState<Task[] | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    // const [tasks, setTasks] = useState<Task[] | null>(taskData);
 
-    // const handlerClick = () => {
-    //     return alert("clicked!");
-    // };
     const handleProgressClickChange = (event: React.ChangeEvent<HTMLInputElement>, taskId: string) => {
         const newProgress = Number(event.target.value);
 
@@ -54,86 +76,28 @@ function Chart({ displayMode }: ChartProps) {
 
         setTaskData(newTasks);
     };
-    const handleExpanderClick = (task: Task) => {
-        setTaskData(taskData ? taskData.map((t) => (t.id === task.id ? task : t)) : []);
-        console.log("On expander click Id:" + task.id);
-    };
+    const handleDateRangeClickChange = (dateRange: Date[], taskId: string) => {
+        const newTasks = taskData
+            ? taskData?.map((t) => (t.id === taskId ? { ...t, start: dateRange[0], end: dateRange[1] } : t))
+            : [];
 
-    const tableHeaders = ["タスク名", "開始日", "終了日", "進捗率(%)"];
-    const CustomTable = ({ tasks }: { tasks: Task[] }) => {
-        return (
-            <div style={{ display: "table", tableLayout: "fixed" }} className="pl-[10px] w-[520px]">
-                <div style={{ display: "table-header-group" }}>
-                    <div style={{ display: "table-row" }}>
-                        {tableHeaders.map((item) => (
-                            <div
-                                key={item}
-                                style={{ display: "table-cell" }}
-                                className="h-[30px] border-b border-gray-300 text-center truncate whitespace-nowrap"
-                            >
-                                {item}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-                <div style={{ display: "table-row-group" }}>
-                    {tasks.map((task, i) => (
-                        <div
-                            key={task.id}
-                            style={{ display: "table-row" }}
-                            className={`${i % 2 === 0 ? "" : "bg-[#f5f5f5]"}`}
-                        >
-                            {[
-                                task.name,
-                                <Input
-                                    key={`${task.id}-start`}
-                                    type="date"
-                                    value={dayjs(task.start).format("YYYY-MM-DD")}
-                                    onChange={(e) => handleStartDateClickChange(e, task.id)}
-                                />,
-                                <div key={`${task.id}-end`}>
-                                    {task.type !== "milestone" ? (
-                                        <Input
-                                            key={`${task.id}-end-input`}
-                                            type="date"
-                                            value={dayjs(task.end).format("YYYY-MM-DD")}
-                                            onChange={(e) => handleEndDateClickChange(e, task.id)}
-                                        />
-                                    ) : (
-                                        []
-                                    )}
-                                </div>,
-                                <div key={`${task.id}-progress`}>
-                                    {task.type !== "milestone" ? (
-                                        <Input
-                                            key={`${task.id}-progress-input`}
-                                            type="number"
-                                            max="100"
-                                            name=""
-                                            id=""
-                                            onChange={(e) => handleProgressClickChange(e, task.id)}
-                                            value={task.progress}
-                                            className="text-center w-[50px] p-0"
-                                            placeholder="prog."
-                                        />
-                                    ) : (
-                                        []
-                                    )}
-                                </div>,
-                            ].map((item, index) => (
-                                <div
-                                    key={index}
-                                    style={{ display: "table-cell" }}
-                                    className="text-center h-[50px] p-2 content-center border-b-[1px] border-[#f5f5f5] truncate whitespace-nowra"
-                                >
-                                    {item}
-                                </div>
-                            ))}
-                        </div>
-                    ))}
-                </div>
-            </div>
+        setTaskData(newTasks);
+    };
+    const handleExpanderClick = (task: Task) => {
+        console.log(task);
+        setTaskData(taskData ? taskData.map((t) => (t.id === task.id ? task : t)) : []);
+        setTaskData(
+            taskData
+                ? taskData.map((item) =>
+                      item.id === task.id || item.project === task.id
+                          ? { ...item, hideChildren: item.hideChildren ? false : true }
+                          : item
+                  )
+                : []
         );
+        console.log(taskData);
+
+        console.log("On expander click Id:" + task.id);
     };
 
     useEffect(() => {
@@ -151,8 +115,7 @@ function Chart({ displayMode }: ChartProps) {
                     start: new Date(task.start),
                     end: new Date(task.end),
                 }));
-
-                setTaskData(transformData);
+                setTaskData(sortTask(transformData));
                 setLoading(false);
                 console.log("http://localhost:5010", data);
                 return data;
@@ -163,7 +126,6 @@ function Chart({ displayMode }: ChartProps) {
                 setLoading(false);
             });
     }, []);
-
     const handleTaskChange = (task: Task) => {
         console.log("On date change Id:" + task.id);
         let newTasks = taskData ? taskData.map((t) => (t.id === task.id ? task : t)) : [];
@@ -186,18 +148,34 @@ function Chart({ displayMode }: ChartProps) {
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
     if (!taskData || taskData.length === 0) return <div>No data available</div>;
+    // async function fetcher(key: string) {
+    //     return fetch(key).then((res) => res.json() as Promise<Task[] | null>);
+    // }
+
+    // const { data, error, isLoading } = useSWR("http://localhost:5010", fetcher);
+
+    // if (error) return <div> failed to load</div>;
+    // if (isLoading) return <div>Loading....</div>;
+    // if (data) {
+    //     const transformData: Task[] = data.map((task: Task) => ({
+    //         ...task,
+    //         start: new Date(task.start),
+    //         end: new Date(task.end),
+    //     }));
+    //     setTaskData(transformData);
+    // }
 
     return (
         <>
             <Gantt
-                tasks={taskData}
+                tasks={taskData || []}
                 handleWidth={1}
                 // listCellWidth={""}
                 columnWidth={50}
                 viewMode={displayMode}
                 preStepsCount={1}
                 locale={"ja-JS"}
-                timeStep={86400000}
+                timeStep={86400000 as number}
                 fontFamily={
                     "proxima-nova, 'Helvetica Neue', Helvetica, Arial, sans-serif,'proxima-nova','Helvetica Neue',Helvetica,Arial,sans-serif"
                 }
@@ -207,11 +185,20 @@ function Chart({ displayMode }: ChartProps) {
                 onProgressChange={handleProgressChange}
                 onExpanderClick={handleExpanderClick}
                 TaskListHeader={() => (
-                    <div className="h-[20px] flex items-center">
-                        <h2 className="text-center p-2 w-full font-bold">Title</h2>
+                    <div className="h-0 flex items-center">
+                        {/* <h2 className="text-center p-2 w-full font-bold">Title</h2> */}
                     </div>
                 )}
-                TaskListTable={() => <CustomTable tasks={taskData} />}
+                TaskListTable={() => (
+                    <CustomTable
+                        tasks={taskData || []}
+                        onStartDateUpdate={handleStartDateClickChange}
+                        onEndDateUpdate={handleEndDateClickChange}
+                        onDateRangeUpdate={handleDateRangeClickChange}
+                        onProgressUpdate={handleProgressClickChange}
+                        onExpanderClick={handleExpanderClick}
+                    />
+                )}
             />
         </>
     );
