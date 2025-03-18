@@ -35,7 +35,7 @@ function App() {
         <div>
             <Header />
             <Controller handleDisplayModeChange={handleDisplayModeChange} />
-            <Chart />
+            <Chart displayMode={displayMode} />
             {/* <GanttChart /> */}
         </div>
     );

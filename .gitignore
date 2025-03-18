@@ -5,3 +5,4 @@ backend/python_service/app/routers/__pycache__/__init__.cpython-311.pyc
 backend/python_service/app/routers/__pycache__/task_api.cpython-311.pyc
 backend/python_service/app/config.env
 /sandbox
+backend/python_service/app/gunicorn.pid
