@@ -27,7 +27,8 @@
                 "rssowl.copy-relative-path-posix",
                 "bradlc.vscode-tailwindcss",
                 "ms-python.flake8",
-                "github.vscode-github-actions"
+                "github.vscode-github-actions",
+                "ms-python.black-formatter"
             ],
             "settings": {
                 "editor.formatOnPaste": true,
